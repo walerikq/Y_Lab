@@ -8,23 +8,21 @@ public class Guess {
     public static void main(String[] args) {
         int number = new Random().nextInt(99) + 1;
         try(Scanner scanner = new Scanner(System.in)){
-            System.out.println(number);
-
             int maxAttempts = 10;
-            System.out.println("Я загадал число. У тебя " + maxAttempts +
-                    " попыток угадать.");
+            System.out.println("РЇ Р·Р°РіР°РґР°Р» С‡РёСЃР»Рѕ. РЈ С‚РµР±СЏ " + maxAttempts +
+                    " РїРѕРїС‹С‚РѕРє СѓРіР°РґР°С‚СЊ.");
             for (int i = 1; i <= maxAttempts; i++) {
                 int userNum = scanner.nextInt();
                 if (userNum > number){
-                    System.out.println("Мое число меньше! У тебя осталось "+ (maxAttempts - i) +" попыток");
+                    System.out.println("РњРѕРµ С‡РёСЃР»Рѕ РјРµРЅСЊС€Рµ! РЈ С‚РµР±СЏ РѕСЃС‚Р°Р»РѕСЃСЊ "+ (maxAttempts - i) +" РїРѕРїС‹С‚РѕРє");
                 } else if (userNum < number){
-                    System.out.println("Мое число больше! У тебя осталось " + (maxAttempts - i) + " попыток");
+                    System.out.println("РњРѕРµ С‡РёСЃР»Рѕ Р±РѕР»СЊС€Рµ! РЈ С‚РµР±СЏ РѕСЃС‚Р°Р»РѕСЃСЊ " + (maxAttempts - i) + " РїРѕРїС‹С‚РѕРє");
                 }else if(userNum == number){
-                    System.out.println("Ты угадал с "+ i +" попытки");
+                    System.out.println("РўС‹ СѓРіР°РґР°Р» СЃ "+ i +" РїРѕРїС‹С‚РєРё");
                     break;
                 }
                 if (i == 10){
-                    System.out.println("Ты не угадал.");
+                    System.out.println("РўС‹ РЅРµ СѓРіР°РґР°Р».");
                 }
             }
         }

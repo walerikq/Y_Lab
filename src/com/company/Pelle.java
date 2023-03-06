@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Pelle {
     public static void main(String[] args) {
         try(Scanner sc = new Scanner(System.in)){
-            System.out.print("Введите число n (0 <= n <= 30): ");
+            System.out.print("Р’РІРµРґРёС‚Рµ С‡РёСЃР»Рѕ n (0 <= n <= 30): ");
 
             while(true){
 
@@ -16,7 +16,7 @@ public class Pelle {
                     System.out.println(n);
                     break;
                 } else if (n > 30 || n < 0) {
-                    System.out.println("Введите число в указанном диапазоне - (0 <= n <= 30)");
+                    System.out.println("Р’РІРµРґРёС‚Рµ С‡РёСЃР»Рѕ РІ СѓРєР°Р·Р°РЅРЅРѕРј РґРёР°РїР°Р·РѕРЅРµ - (0 <= n <= 30)");
                     continue;
                 } else {
                     for (int i = 2; i <= n; i++) {
@@ -24,7 +24,7 @@ public class Pelle {
                         p1 = p2;
                         p2 = p3;
                     }
-                    System.out.println("Число Пелля P(n) = " + p3);
+                    System.out.println("Р§РёСЃР»Рѕ РџРµР»Р»СЏ P(n) = " + p3);
                     break;
                 }
 
