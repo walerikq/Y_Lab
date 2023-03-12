@@ -1,4 +1,4 @@
-package com.company;
+package com.company.FirstLesson;
 
 public class MultiTable {
     public static void main(String[] args) {
