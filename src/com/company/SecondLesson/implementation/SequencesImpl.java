@@ -1,4 +1,4 @@
-package com.company.SecondLesson.realisation;
+package com.company.SecondLesson.implementation;
 
 import com.company.SecondLesson.interfaces.Sequences;
 

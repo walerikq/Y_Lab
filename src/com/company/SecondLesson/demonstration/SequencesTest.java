@@ -1,6 +1,6 @@
 package com.company.SecondLesson.demonstration;
 
-import com.company.SecondLesson.realisation.SequencesImpl;
+import com.company.SecondLesson.implementation.SequencesImpl;
 
 public class SequencesTest {
     public static void main(String[] args) {

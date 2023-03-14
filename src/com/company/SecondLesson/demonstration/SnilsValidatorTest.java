@@ -1,6 +1,6 @@
 package com.company.SecondLesson.demonstration;
 
-import com.company.SecondLesson.realisation.SnilsValidatorImpl;
+import com.company.SecondLesson.implementation.SnilsValidatorImpl;
 
 public class SnilsValidatorTest {
     public static void main(String[] args) {

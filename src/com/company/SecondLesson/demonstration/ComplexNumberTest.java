@@ -1,6 +1,6 @@
 package com.company.SecondLesson.demonstration;
 
-import com.company.SecondLesson.realisation.ComplexNumberImpl;
+import com.company.SecondLesson.implementation.ComplexNumberImpl;
 
 public class ComplexNumberTest {
     public static void main(String[] args) {

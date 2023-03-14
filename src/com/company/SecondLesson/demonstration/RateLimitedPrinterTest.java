@@ -1,6 +1,6 @@
 package com.company.SecondLesson.demonstration;
 
-import com.company.SecondLesson.realisation.RateLimitedPrinterImpl;
+import com.company.SecondLesson.implementation.RateLimitedPrinterImpl;
 
 public class RateLimitedPrinterTest {
     public static void main(String[] args) {

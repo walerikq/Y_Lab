@@ -1,6 +1,6 @@
 package com.company.SecondLesson.interfaces;
 
-import com.company.SecondLesson.realisation.ComplexNumberImpl;
+import com.company.SecondLesson.implementation.ComplexNumberImpl;
 
 public interface ComplexNumber {
 

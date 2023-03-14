@@ -1,4 +1,4 @@
-package com.company.SecondLesson.realisation;
+package com.company.SecondLesson.implementation;
 
 import com.company.SecondLesson.interfaces.StatsAccumulator;
 
@@ -26,7 +26,7 @@ public class StatsAccumulatorImpl implements StatsAccumulator {
     @Override
     public int getMin() {
         if (count == 0){
-            System.out.println("Не было добавлено ни одного элемента.");
+            System.out.println("РќРµ Р±С‹Р»Рѕ РґРѕР±Р°РІР»РµРЅРѕ РЅРё РѕРґРЅРѕРіРѕ СЌР»РµРјРµРЅС‚Р°.");
         }
 
         return min;
@@ -35,7 +35,7 @@ public class StatsAccumulatorImpl implements StatsAccumulator {
     @Override
     public int getMax() {
         if (count == 0){
-            System.out.println("Не было добавлено ни одного элемента.");
+            System.out.println("РќРµ Р±С‹Р»Рѕ РґРѕР±Р°РІР»РµРЅРѕ РЅРё РѕРґРЅРѕРіРѕ СЌР»РµРјРµРЅС‚Р°.");
         }
         return max;
     }
