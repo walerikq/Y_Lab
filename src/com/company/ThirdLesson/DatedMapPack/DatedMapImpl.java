@@ -9,17 +9,17 @@ import java.util.Set;
 
 
 public class DatedMapImpl implements DatedMap {
-    private final Map<String,String> map;
-    private final Map<String,Date> mapDate;
+    private final Map<String, String> map;
+    private final Map<String, Date> mapDate;
 
-    public DatedMapImpl(){
+    public DatedMapImpl() {
         this.map = new HashMap<>();
         this.mapDate = new HashMap<>();
     }
 
     public void put(String key, String value) {
-        map.put(key,value);
-        mapDate.put(key,new Date());
+        map.put(key, value);
+        mapDate.put(key, new Date());
 
     }
 
@@ -45,9 +45,9 @@ public class DatedMapImpl implements DatedMap {
 
     @Override
     public Date getKeyLastInsertionDate(String key) {
-        if (map.containsKey(key)){
+        if (map.containsKey(key)) {
             return mapDate.get(key);
-        }else
+        } else
             return null;
     }
 }

@@ -1,7 +1,7 @@
 package com.company.ThirdLesson.PasswordValidatorPack.exception;
 
-public class WrongPasswordException extends Exception{
-   public WrongPasswordException(){
+public class WrongPasswordException extends Exception {
+    public WrongPasswordException() {
 
     }
 

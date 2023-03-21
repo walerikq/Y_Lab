@@ -67,7 +67,7 @@ public class Sorter {
     }
 
     private static class LongComparator implements Comparator<DataInputStream> {
-        private IOException e = new IOException();
+        private final IOException e = new IOException();
 
         @Override
         public int compare(DataInputStream o1, DataInputStream o2) {
