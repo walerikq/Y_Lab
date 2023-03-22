@@ -6,12 +6,12 @@ import java.util.*;
 public class Sorter {
     private static final int DEFAULT_PART_SIZE = 100_000_000;
 
-    public File sortFile(File dataFile) throws IOException {
-        return sortFile(dataFile, DEFAULT_PART_SIZE);
+    public void sortFile(File dataFile, File sortedFile) throws IOException {
+        sortFile(dataFile, sortedFile, DEFAULT_PART_SIZE);
     }
 
-    public File sortFile(File dataFile, int partSize) throws IOException {
-        List<File> sortedParts = new ArrayList<>();
+    public void sortFile(File dataFile, File sortedFile, int partSize) throws IOException {
+        List<long[]> sortedParts = new ArrayList<>();
         try (Scanner scanner = new Scanner(new FileInputStream(dataFile))) {
             long[] part = new long[partSize];
             int i = 0;
@@ -20,63 +20,34 @@ public class Sorter {
                 i++;
                 if (i == partSize) {
                     Arrays.sort(part);
-                    File partFile = File.createTempFile("part", ".dat");
-                    try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(partFile))) {
-                        for (long value : part) {
-                            dos.writeLong(value);
-                        }
-                    }
-                    sortedParts.add(partFile);
+                    sortedParts.add(part);
+                    part = new long[partSize];
                     i = 0;
                 }
             }
             if (i > 0) {
                 Arrays.sort(part, 0, i);
-                File partFile = File.createTempFile("part", ".dat");
-                try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(partFile))) {
-                    for (int j = 0; j < i; j++) {
-                        dos.writeLong(part[j]);
-                    }
-                }
-                sortedParts.add(partFile);
+                sortedParts.add(Arrays.copyOf(part, i));
             }
         }
 
-        File sortedFile = File.createTempFile("sorted", ".dat");
-        PriorityQueue<DataInputStream> pq = new PriorityQueue<>(sortedParts.size(), new LongComparator());
-        for (File partFile : sortedParts) {
-            pq.add(new DataInputStream(new BufferedInputStream(new FileInputStream(partFile))));
-        }
+        PriorityQueue<long[]> pq = new PriorityQueue<>(sortedParts.size(), new LongArrayComparator());
+        pq.addAll(sortedParts);
+
         try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(sortedFile))) {
             while (!pq.isEmpty()) {
-                DataInputStream dis = pq.poll();
-                long value = dis.readLong();
-                dos.writeLong(value);
-                if (dis.available() > 0) {
-                    pq.add(dis);
-                } else {
-                    dis.close();
+                long[] part = pq.poll();
+                for (long value : part) {
+                    dos.writeLong(value);
                 }
             }
         }
-
-        for (File partFile : sortedParts) {
-            partFile.delete();
-        }
-        return sortedFile;
     }
 
-    private static class LongComparator implements Comparator<DataInputStream> {
-        private final IOException e = new IOException();
-
+    private static class LongArrayComparator implements Comparator<long[]> {
         @Override
-        public int compare(DataInputStream o1, DataInputStream o2) {
-            try {
-                return Long.compare(o1.readLong(), o2.readLong());
-            } catch (IOException e) {
-                this.e.initCause(e);
-                throw new RuntimeException(this.e);
-            }
+        public int compare(long[] o1, long[] o2) {
+            return Long.compare(o1[0], o2[0]);
         }
     }
 }
