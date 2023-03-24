@@ -45,9 +45,6 @@ public class DatedMapImpl implements DatedMap {
 
     @Override
     public Date getKeyLastInsertionDate(String key) {
-        if (map.containsKey(key)) {
-            return mapDate.get(key);
-        } else
-            return null;
+        return mapDate.get(key);
     }
 }
