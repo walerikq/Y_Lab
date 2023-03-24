@@ -11,7 +11,7 @@ public class Sorter {
     }
 
     public void sortFile(File dataFile, File sortedFile, int partSize) throws IOException {
-        List<long[]> sortedParts = new ArrayList<>();
+        List<File> sortedParts = new ArrayList<>();
         try (Scanner scanner = new Scanner(new FileInputStream(dataFile))) {
             long[] part = new long[partSize];
             int i = 0;
@@ -20,34 +20,74 @@ public class Sorter {
                 i++;
                 if (i == partSize) {
                     Arrays.sort(part);
-                    sortedParts.add(part);
+                    sortedParts.add(writePartToFile(part));
                     part = new long[partSize];
                     i = 0;
                 }
             }
             if (i > 0) {
                 Arrays.sort(part, 0, i);
-                sortedParts.add(Arrays.copyOf(part, i));
+                sortedParts.add(writePartToFile(Arrays.copyOf(part, i)));
             }
         }
 
-        PriorityQueue<long[]> pq = new PriorityQueue<>(sortedParts.size(), new LongArrayComparator());
-        pq.addAll(sortedParts);
+        mergeSortedParts(sortedParts, sortedFile);
+    }
 
-        try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(sortedFile))) {
+    private File writePartToFile(long[] part) throws IOException {
+        File file = File.createTempFile("part", ".tmp");
+        try (PrintWriter pw = new PrintWriter(file)) {
+            for (long value : part) {
+                pw.println(value);
+            }
+        }
+        return file;
+    }
+
+    private void mergeSortedParts(List<File> sortedParts, File sortedFile) throws IOException {
+        PriorityQueue<Part> pq = new PriorityQueue<>(sortedParts.size(), Comparator.comparingLong(part -> part.currentValue));
+        for (File partFile : sortedParts) {
+            Part part = new Part(partFile);
+            if (part.hasNext()) {
+                part.readNext();
+                pq.add(part);
+            }
+        }
+
+        try (PrintWriter pw = new PrintWriter(sortedFile)) {
             while (!pq.isEmpty()) {
-                long[] part = pq.poll();
-                for (long value : part) {
-                    dos.writeLong(value);
+                Part part = pq.poll();
+                pw.println(part.currentValue);
+                if (part.hasNext()) {
+                    part.readNext();
+                    pq.add(part);
                 }
             }
         }
+
+        for (File partFile : sortedParts) {
+            partFile.delete();
+        }
     }
 
-    private static class LongArrayComparator implements Comparator<long[]> {
-        @Override
-        public int compare(long[] o1, long[] o2) {
-            return Long.compare(o1[0], o2[0]);
+    private static class Part {
+        Scanner scanner;
+        long currentValue;
+
+        Part(File partFile) throws FileNotFoundException {
+            scanner = new Scanner(partFile);
+        }
+
+        boolean hasNext() {
+            return scanner.hasNextLong();
+        }
+
+        void readNext() {
+            currentValue = scanner.nextLong();
+        }
+
+        void close() {
+            scanner.close();
         }
     }
 }
